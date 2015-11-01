@@ -11,7 +11,7 @@ init.bindEvents = function() {
         // });
 
         main.sumToCheck = '8' || $('#n').val();
-        main.exponent = $('#exp').val() || '2';
+        main.exponent = $('#exp').val() || '3';
         var strToSearch = $('#txt').val() || '3521148';
 
         var timeUsed = util.testPerformance(function() { // testPerformance OR testTime(if console is opened)
@@ -19,7 +19,7 @@ init.bindEvents = function() {
             res = main.iterateToExp(main.exponent);
         });
 
-        console.log(timeUsed, res.length, res);
+        //console.log(timeUsed, res.length, res);
         init.setResults(res, strToSearch, timeUsed);
     });
 
@@ -60,8 +60,8 @@ init.setResults = function(res, strToSearch, timeUsed) {
     //str += '<div class="length">Length of number = <span>'+strToSearch.length+'</span></div>';
     str += res ? '<div class="found">The entered exponent = <span>' + main.exponent + '</span></div>' : '';
     str += res ? '<div class="found">Number of matches found (from 1 to ' + main.numTo + ') = <span>' + res.length + '</span></div>' : '';
-    str += timeUsed ? '<div class="time">Time(in millisec.) utilized to find matches = <span>' + timeUsed + '</span></div>' : '';
-    //str += res ? '<div class="matches">Matches : <ol>'+init.getResultList(res)+'</ol></div>' : '';
+    str += timeUsed ? '<div class="time">Time(in sec) utilized to find matches = <span>' + timeUsed / 1000 + '</span></div>' : '';
+    str += res ? '<div class="matches">Matches : <ol>' + init.getResultList(res) + '</ol></div>' : '';
 
     $('#result').html(str);
 };
