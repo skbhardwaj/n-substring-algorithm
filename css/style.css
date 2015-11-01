@@ -19,7 +19,13 @@ input {
 }
 
 ol{
-  margin: 0 auto;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+ol li {
+  text-align: right;
+  max-width: 200px;
 }
 
 header {
@@ -32,7 +38,9 @@ main {
 }
 
 footer {
-
+  margin: 20px 0 0 0;
+  text-align: center;
+  font-size: 0.65em;
 }
 
 label {

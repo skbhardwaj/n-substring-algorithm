@@ -8,3 +8,5 @@ A number is called 8-substring-friendly if every one of its digits belongs to a 
 For example, 352114 is 8-substring-friendly, but 26(5)44 is not. 
 
 For a given n, find T(n) the number of 8-substring-friendly numbers from 1 to 10^n.
+
+**[Demo!](http://skbhardwaj.github.io/n-substring-algorithm/)**
