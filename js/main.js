@@ -15,7 +15,7 @@ function checkSumRecursively(num, startIndex, endIndex, arrResults) {
 
     var substr = util.getSubString(num, startIndex, endIndex);
     var sumOfSubstr = util.getSum(substr);
-    //console.log('sumOfSubstr('+substr+')='+sumOfSubstr);
+    console.log('sumOfSubstr(' + substr + ')=' + sumOfSubstr);
 
     if (sumOfSubstr < main.sumToCheck) {
         //console.log('keep startIndex, endIndex++, keep sum & call checkSumRecursively()');
@@ -131,7 +131,7 @@ main.pushToArray = function(num, arrResults, substr, startIndex, endIndex) {
 main.search = function(num) {
     var arrResults = [];
     //console.log('Length('+ num +')='+ num.length +'.');
-    var selectedMethod = 4 || $('input[name="method"]:checked').val();
+    var selectedMethod = $('input[name="method"]:checked').val() || '0';
 
     switch (selectedMethod) {
         case '1':
@@ -158,7 +158,6 @@ main.search = function(num) {
 main.iterateToExp = function(exp) {
     main.numTo = Math.pow(10, exp);
     var arrResults = [];
-    var has9 = /^[9]+$/g;
 
     for (var i = 1; i <= main.numTo; i++) {
 

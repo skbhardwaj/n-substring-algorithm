@@ -19,7 +19,7 @@ init.bindEvents = function() {
             res = main.iterateToExp(main.exponent);
         });
 
-        //console.log(timeUsed, res.length, res);
+        console.log(timeUsed, res.length, res);
         init.setResults(res, strToSearch, timeUsed);
     });
 
