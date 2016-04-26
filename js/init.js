@@ -6,21 +6,17 @@ init.bindEvents = function() {
     $('#btn').on('click', function(e) {
         console.clear();
 
-        // $('#result').html(function(){
-        //   return $(this).data('text');
-        // });
-
-        main.sumToCheck = '8' || $('#n').val();
-        main.exponent = $('#exp').val() || '3';
-        var strToSearch = $('#txt').val() || '3521148';
+        main.sumToCheck = $('#n').val() || main.sumToCheck;
+        main.exponent = $('#exp').val() || $('#exp').data('text');
+        main.numTo = Math.pow(10, main.exponent);
+        main.methodUsed = $('input[name="method"]:checked').val() || '1';
 
         var timeUsed = util.testPerformance(function() { // testPerformance OR testTime(if console is opened)
-            //res = main.search(strToSearch);
-            res = main.iterateToExp(main.exponent);
+            res = main.search();
         });
 
         //console.log(timeUsed, res.length, res);
-        init.setResults(res, strToSearch, timeUsed);
+        init.setResults(res, timeUsed);
     });
 
     $('#clear').on('click', function(e) {
@@ -28,13 +24,28 @@ init.bindEvents = function() {
         $('#result').html(function() {
             return $(this).data('text');
         });
-        // $('#n').val(function(){
-        //   return $(this).data('text');
-        // });
-        $('#exp').val(function() {
+        $('#n').val(function() {
             return $(this).data('text');
         });
-        //$('#txt').val('').focus();
+        $('#exp').val(function() {
+            return $(this).data('text');
+        }).focus();
+    });
+
+    $('.ctrl').on('click', function(e) {
+        var $inp = $(this).closest('.step').find('input[type="text"]');
+        var res = +$inp.val();
+        var operator = $(this).data('val');
+
+        if (operator === '+') {
+            res += 1;
+        } else {
+            res -= 1;
+        }
+
+        if (res <= 0) {res = 1;}
+
+        $inp.val(res).focus();
     });
 };
 
@@ -42,25 +53,19 @@ init.bindEvents = function() {
 init.getResultList = function(res) {
     var li = '';
     for (var i = 0; i < res.length; i++) {
-        //console.log(res[i].num +"-"+ res[i].substr +"-"+ res[i].startIndex +"-"+ res[i].endIndex);
-
-        //var replaceWith = '<span>'+res[i].substr+'</span>'; // ''; //
-        //li += '<li>'+res[i].num.replaceBetween(res[i].startIndex, res[i].endIndex, replaceWith)+'</li>';
         li += '<li>' + res[i] + '</li>';
     }
-    //console.log(li);
     return li;
 };
 
 // Set the results in DOM
-init.setResults = function(res, strToSearch, timeUsed) {
+init.setResults = function(res, timeUsed) {
     //console.log(res);
     var str = '';
-    //str += '<div class="number">The entered number = <span>'+strToSearch+'</span></div>';
-    //str += '<div class="length">Length of number = <span>'+strToSearch.length+'</span></div>';
+    str += res ? '<div class="found">The entered sum to check = <span>' + main.sumToCheck + '</span></div>' : '';
     str += res ? '<div class="found">The entered exponent = <span>' + main.exponent + '</span></div>' : '';
     str += res ? '<div class="found">Number of matches found (from 1 to ' + main.numTo + ') = <span>' + res.length + '</span></div>' : '';
-    str += timeUsed ? '<div class="time">Time(in sec) utilized to find matches = <span>' + timeUsed / 1000 + '</span></div>' : '';
+    str += timeUsed ? '<div class="time">Time(in ms) utilized to find matches = <span>' + timeUsed + '</span></div>' : '';
     str += res ? '<div class="matches">Matches : <ol>' + init.getResultList(res) + '</ol></div>' : '';
 
     $('#result').html(str);

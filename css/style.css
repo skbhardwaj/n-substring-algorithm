@@ -21,6 +21,7 @@ input {
 ol{
   max-height: 200px;
   overflow-y: scroll;
+  margin-left: 10%;
 }
 
 ol li {

@@ -15,6 +15,11 @@ util.testTime = function(functionToTest) {
     return console.timeEnd("ProcessTime");
 };
 
+// Merge 2 arrays; returns arr2;
+util.mergerArrays = function(arr1, arr2) {
+    return Array.prototype.push.apply(arr1, arr2);
+};
+
 // Get substring
 util.getSubString = function(num, x, y) {
     var retStr = 0;
@@ -26,6 +31,29 @@ util.getSubString = function(num, x, y) {
 
     //console.log(retStr);
     return retStr;
+};
+
+util.getDummyOfLengthN = function(n, replaceBy) {
+    var retVal = '';
+    for (var i = 0; i < n; i++) {
+        retVal += replaceBy;
+    };
+    return retVal;
+};
+
+util.getLastNDigits = function(strNumber, indexN) {
+
+    return strNumber.toString().substr(strNumber.length - (+lastNDigits), (+lastNDigits));
+};
+
+util.replaceFirstChars = function(strNumber, firstNDigits, replaceBy) {
+    var strTemp = util.getDummyOfLengthN(firstNDigits, replaceBy);
+    return strTemp + strNumber.substring(firstNDigits);
+};
+
+util.replaceLastChars = function(strNumber, lastNDigits, replaceBy) {
+    var strTemp = util.getDummyOfLengthN(lastNDigits, replaceBy);
+    return strNumber.substring(0, strNumber.length - (+lastNDigits)) + strTemp;
 };
 
 // Get sum of digits of number
@@ -54,18 +82,57 @@ util.getSum = function(txt) {
     return sum;
 };
 
+// get char at given index location
 util.getCharacter = function(str, loc) {
     var strRet;
-    strRet = str.charAt(loc);
+    strRet = str.charAt(loc) || -1;
     //strRet = str.toString()[loc];
     return strRet;
 };
 
+// initializes given prototypes
 util.initPrototypes = function() {
+
+    // repeats the string n times
+    String.prototype.repeat = function(count) {
+        if (count < 1) return '' + this;
+        var result = '', pattern = this.valueOf();
+        while (count > 1) {
+            if (count & 1) result += pattern;
+            count >>= 1, pattern += pattern;
+        }
+        return result + pattern;
+    };
+
+    // repeats the string n times
+    String.prototype.splitIndex = function(index) {
+        var arrSplit = [];
+        arrSplit.push(this.substring(0, index));
+        arrSplit.push(this.substring(index));
+        return arrSplit;
+    };
+
+    // replaces at nth index
+    String.prototype.replaceAt = function(index, character) {
+        index = index.toString();
+        character = character.toString();
+        return this.toString().substr(0, index) + character + this.toString().substr(index + character.length);
+    };
 
     // replace a string between from & to
     String.prototype.replaceBetween = function(start, end, what) {
+
         return this.substring(0, start) + what + this.substring(end + 1);
+    };
+
+    // reverses a given string
+    String.prototype.reverse = function() {
+        //return this.split('').reverse().join('');
+
+        var o = '';
+        for (var i = this.length - 1; i >= 0; i--)
+          o += this[i];
+        return o;
     };
 
     // push numbers between the range
@@ -77,7 +144,6 @@ util.initPrototypes = function() {
         }
         return this;
     };
-
 };
 
 // Initializes default functions
